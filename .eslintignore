@@ -1,0 +1,9 @@
+**/node_modules
+**/bower_components
+**/lib
+**/vendor
+**/*.min.js
+**/bundle.js
+**/sampleProducts.js
+**/coverage
+**/data
