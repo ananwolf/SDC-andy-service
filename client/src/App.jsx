@@ -27,7 +27,7 @@ const App = () => {
       <div id="darkTheme" style={themeStyles}>
         <div id="padding">
           <section id='product-overview-section'>
-            <SectionTracker sectionName={'product-overview-section'} render={(handleTracking) => (
+            {/* <SectionTracker sectionName={'product-overview-section'} render={(handleTracking) => (
               <OverviewApp productId={productId}
                 reviewCount={reviewCount}
                 rating={rating}
@@ -37,11 +37,11 @@ const App = () => {
                 handleTracking={handleTracking}
               />
             )}>
-            </SectionTracker>
+            </SectionTracker> */}
 
           </section>
           <section id='related-items-and-comparison-section'>
-            <SectionTracker sectionName={'related-items-and-comparison-section'} render={(handleTracking) => (
+            {/* <SectionTracker sectionName={'related-items-and-comparison-section'} render={(handleTracking) => (
               <RelatedItemsAndComparison
                 productId={productId}
                 setProductId={setProductId}
@@ -50,7 +50,7 @@ const App = () => {
                 handleTracking={handleTracking}
               />
             )}>
-            </SectionTracker>
+            </SectionTracker> */}
 
           </section>
           <section id='questions-and-answers-section'>
@@ -63,7 +63,7 @@ const App = () => {
             </SectionTracker>
           </section>
           <section id='reviews-and-ratings-section'>
-            <SectionTracker sectionName={'reviews-and-ratings-section'} render={(handleTracking) => (
+            {/* <SectionTracker sectionName={'reviews-and-ratings-section'} render={(handleTracking) => (
               <ReviewEntry productId={productId}
                 setProductId={setProductId}
                 setReviewCount={setReviewCount}
@@ -71,7 +71,7 @@ const App = () => {
                 handleTracking={handleTracking}
               />
             )}>
-            </SectionTracker>
+            </SectionTracker> */}
           </section>
         </div>
       </div>
