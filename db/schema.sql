@@ -30,5 +30,21 @@ CREATE TABLE answers_photos (
   id SERIAL PRIMARY KEY,
   answer_id SERIAL,
   photo_url TEXT,
-  FOREIGN KEY (answers_id) REFERENCES answers (id)
+  FOREIGN KEY (answer_id) REFERENCES answers (id)
 );
+
+COPY answers_photos(id, answer_id, photo_url)
+FROM '/Users/ananwolf/Desktop/SDC-DB/answers_photos.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY answers(id, question_id, body, date_written, answerer_name, answerer_email, reported, helpful)
+FROM '/Users/ananwolf/Desktop/SDC-DB/answers.csv'
+DELIMITER ','
+CSV HEADER;
+
+
+
+FROM '/Users/ananwolf/Desktop/SDC-DB/questions.csv'
+DELIMITER ','
+
