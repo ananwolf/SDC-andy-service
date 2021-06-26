@@ -8,7 +8,7 @@ const Answers = ({ answer }) => (
     <div className='answer'>A: {answer.body}</div>
     <div className='photo-div'>
       {answer.photos.length ? answer.photos.map((photo, id) => (
-        <AnswerPhotos photo={photo} key={id} />
+        <AnswerPhotos photo={photo.url} key={id} />
       )) : null}
     </div>
     <AnswerHelpful

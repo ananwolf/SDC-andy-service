@@ -48,3 +48,7 @@ CSV HEADER;
 FROM '/Users/ananwolf/Desktop/SDC-DB/questions.csv'
 DELIMITER ','
 
+
+db.collection.updateMany(
+  { id: { $eq: answer_id }}
+)

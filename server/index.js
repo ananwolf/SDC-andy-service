@@ -66,15 +66,31 @@ app.post('/addToCart', (req, res) => {
 });
 
 /* -------- QUESTION & ANSWER -------- */
+const { fetchQuestions } = require('../db/pg_index.js');
+
 app.get('/qa/questions', (req, res) => {
+  console.log('GET request at server');
   let productId = req.query.productId;
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-sjo/qa/questions?product_id=${productId}&count=15`, {
-    headers: {
-      Authorization: APIToken.TOKEN
-    }
-  })
-    .then(response => res.status(200).json(response.data))
-    .catch(err => res.status(400).send('Error while fetching Q&A'));
+  console.log(productId)
+  // console.log(fetchQuestions(productId), 'logging fetch questions')
+  fetchQuestions(productId)
+    .then((data) => {
+      let promisedData = {
+        product_id: productId,
+        results: data
+      };
+
+      console.log(promisedData, 'at server')
+      res.status(200).send(promisedData)
+    })
+    .catch(err => res.status(404).send(`error fetching questions ${err}`));
+  // axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-sjo/qa/questions?product_id=${productId}&count=15`, {
+  //   headers: {
+  //     Authorization: APIToken.TOKEN
+  //   }
+  // })
+  //   .then(response => res.status(200).json(response.data))
+  //   .catch(err => res.status(400).send('Error while fetching Q&A'));
 });
 
 app.post('/qa/questions', (req, res) => {
