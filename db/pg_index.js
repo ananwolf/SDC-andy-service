@@ -1,10 +1,11 @@
 const pg = require('pg');
+const PASS = require('../config.js');
 
 const pool = new pg.Pool({
   user: 'ananwolf',
   host: 'localhost',
   database: 'questionsanswers',
-  password: 'QweAsdjkl52200@',
+  password: PASS,
   port: 5432
 });
 
@@ -17,18 +18,14 @@ const fetchQuestions = (prodId) =>
       let promisedAnswers = questionData.map(question => {
         return fetchAnswers(question.question_id);
       });
-      // console.log(promisedAnswers)
       return Promise.all(promisedAnswers)
         .then(data => {
-          // console.log(promisedAnswers)
           return questionData.map((question, index) => {
-            // console.log({ ...question, answers: data[index] }, 'at pg db')
             return { ...question, answers: data[index] };
           });
         });
     })
     .catch(err => console.log(err));
-
 
 const fetchAnswers = (questionId) =>
   pool.query('SELECT * FROM answers WHERE question_id = $1;', [questionId])
@@ -50,12 +47,10 @@ const fetchAnswers = (questionId) =>
               photos: photo[index]
             };
           });
-          // console.log(answerObj);
           return answerObj;
         });
     })
     .catch(err => console.log(err));
-
 
 const fetchPhotos = (answerId) =>
   pool.query('SELECT * FROM answers_photos WHERE answer_id = $1', [answerId])
@@ -74,8 +69,3 @@ const fetchPhotos = (answerId) =>
 module.exports = {
   fetchQuestions
 };
-
-// console.log(fetchQuestions(13023))
-
-
-// “mongodb://localhost:27017
