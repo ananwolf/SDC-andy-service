@@ -3,27 +3,27 @@
 -- CREATE DATABASE questionsAnswers;
 
 CREATE TABLE questions (
-  id SERIAL,
+  question_id SERIAL,
   product_id SERIAL,
-  body VARCHAR(1000),
-  date_written DATE,
+  question_body VARCHAR(1000),
+  question_date DATE,
   asker_name VARCHAR(60),
   asker_email TEXT,
   reported BOOLEAN,
-  helpful SMALLINT,
-  PRIMARY KEY (id)
+  question_helpfulness SMALLINT,
+  PRIMARY KEY (question_id)
 );
 
 CREATE TABLE answers (
   id SERIAL PRIMARY KEY,
   question_id SERIAL,
   body VARCHAR(1000),
-  date_written TIMESTAMP,
+  date DATE,
   answerer_name VARCHAR,
   answerer_email TEXT,
   reported BOOLEAN,
-  helpful SMALLINT,
-  FOREIGN KEY (question_id) REFERENCES questions (id)
+  helpfulness SMALLINT,
+  FOREIGN KEY (question_id) REFERENCES questions (question_id)
 );
 
 CREATE TABLE answers_photos (
@@ -38,15 +38,15 @@ FROM '/Users/ananwolf/Desktop/SDC-DB/answers_photos.csv'
 DELIMITER ','
 CSV HEADER;
 
-COPY answers(id, question_id, body, date_written, answerer_name, answerer_email, reported, helpful)
+COPY answers(id, question_id, body, date, answerer_name, answerer_email, reported, helpfulness)
 FROM '/Users/ananwolf/Desktop/SDC-DB/answers.csv'
 DELIMITER ','
 CSV HEADER;
 
-
-
+COPY questions(question_id, product_id, question_body, question_date, asker_name, asker_email, reported, question_helpfulness)
 FROM '/Users/ananwolf/Desktop/SDC-DB/questions.csv'
 DELIMITER ','
+CSV HEADER;
 
 
 db.collection.updateMany(

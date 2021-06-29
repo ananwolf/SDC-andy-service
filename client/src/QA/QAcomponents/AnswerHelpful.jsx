@@ -14,20 +14,18 @@ const AnswerHelpful = ({ answerHelpfulness, answerDate, answerId, answerName }) 
   const handleEventPut = (event) => {
     !helpfulToggle && event.target.getAttribute('name') === 'helpful'
 
-      ? (axios.put('/qa/questions/answer/helpful', {
-        answerId: answerId,
+      ? (axios.put(`/qa/answers/${answerId}/helpful`, {
         type: event.target.getAttribute('name'),
       })
-        .then(response => console.log('+1'))
+        .then(() => console.log('+1'))
         .catch(err => console.log(err)), setHelpfulToggle(true))
 
       : !reportToggle && event.target.getAttribute('name') === 'report'
 
-        ? (axios.put('/qa/questions/answer/helpful', {
-          answerId: answerId,
+        ? (axios.put(`/qa/answers/${answerId}/report`, {
           type: event.target.getAttribute('name'),
         })
-          .then(response => console.log('+1'))
+          .then(() => console.log('reported'))
           .catch(err => console.log(err)), setReportToggle(true))
 
         : null;

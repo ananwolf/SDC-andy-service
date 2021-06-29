@@ -66,10 +66,17 @@ app.post('/addToCart', (req, res) => {
 });
 
 /* -------- QUESTION & ANSWER -------- */
-const { fetchQuestions } = require('../db/pg_index.js');
+const {
+  fetchQuestions,
+  postQuestion,
+  postAnswer,
+  putQuestionHelpful,
+  putAnswerHelpful,
+  putAnswerReport
+} = require('../db/pg_index.js');
 
-app.get('/qa/questions', (req, res) => {
-  let productId = req.query.productId;
+app.get('/qa/questions/:productId', (req, res) => {
+  let productId = req.params.productId;
   fetchQuestions(productId)
     .then((data) => {
       let promisedData = {
@@ -79,49 +86,39 @@ app.get('/qa/questions', (req, res) => {
       res.status(200).send(promisedData);
     })
     .catch(err => res.status(404).send(`error fetching questions ${err}`));
-  // axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-sjo/qa/questions?product_id=${productId}&count=15`, {
-  //   headers: {
-  //     Authorization: APIToken.TOKEN
-  //   }
-  // })
-  //   .then(response => res.status(200).json(response.data))
-  //   .catch(err => res.status(400).send('Error while fetching Q&A'));
 });
 
 app.post('/qa/questions', (req, res) => {
-  axios.post('https://app-hrsei-api.herokuapp.com/api/fec2/hr-sjo/qa/questions', req.body, {headers: { Authorization: APIToken.TOKEN }})
-    .then(response => {
-      res.status(201).send(response.data);
-    })
-    .catch(err => res.status(400).send(`Err adding question, server side ${err}`));
+  postQuestion(req.body.product_id, req.body.body, req.body.name, req.body.email)
+    .then(response => res.status(201).send(response))
+    .catch(err => res.status(400).send(`err at post question server ${err}`));
 });
 
-app.post('/qa/questions/answer', (req, res) => {
-  let questionId = req.body.questionId;
-  axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-sjo/qa/questions/${questionId}/answers`, req.body, {headers: { Authorization: APIToken.TOKEN }})
-    .then(response => {
-      res.status(201).send(response.data);
-    })
-    .catch(err => res.status(400).send(`Err adding answer, server side ${err}`));
+app.post('/qa/questions/:question_id/answer', (req, res) => {
+  postAnswer(req.params.question_id, req.body.body, req.body.name, req.body.email, req.body.photos)
+    .then(response => res.status(201).send(response))
+    .catch(err => res.status(400).send(`err at post answer server ${err}`));
 });
 
-app.put('/question/helpful', (req, res) => {
-  let questionId = req.body.questionId;
-  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-sjo/qa/questions/${questionId}/helpful`, null, {headers: { Authorization: APIToken.TOKEN }})
-    .then(response => res.status(204))
-    .catch(err => {
-      res.status(400).send('Error updating helpful status');
-    });
+app.put('/question/:question_id/helpful', (req, res) => {
+  let questionId = req.params.question_id;
+  putQuestionHelpful(questionId)
+    .then(response => res.status(204).send(response))
+    .catch(err => res.status(400).send(`err at PUT question helpful ${err}`));
 });
 
-app.put('/qa/questions/answer/helpful', (req, res) => {
-  let answerId = req.body.answerId;
-  let type = req.body.type;
-  axios.put(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-sjo/qa/answers/${answerId}/${type}`, null, {headers: { Authorization: APIToken.TOKEN }})
-    .then(response => res.status(204))
-    .catch(err => {
-      res.status(400).send('Error updating helpful status');
-    });
+app.put('/qa/answers/:answer_id/helpful', (req, res) => {
+  let answerId = req.params.answer_id;
+  putAnswerHelpful(answerId)
+    .then(response => res.status(204).send(response))
+    .catch(err => res.status(400).send(`err at PUT answer helpful ${err}`));
+});
+
+app.put('/qa/answers/:answer_id/report', (req, res) => {
+  let answerId = req.params.answer_id;
+  putAnswerReport(answerId)
+    .then(response => res.status(204).send(response))
+    .catch(err => res.status(400).send(`err at PUT answer report ${err}`));
 });
 
 /* -------- RELATED PRODUCT FETCHING -------- */

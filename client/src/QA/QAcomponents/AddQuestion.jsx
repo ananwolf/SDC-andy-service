@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddQuestion = ({ productId, handleModalClose, openModal, prodName }) => {
+const AddQuestion = ({ productId, handleModalClose, openModal }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [questionBody, setQuestionBody] = useState('');

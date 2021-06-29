@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const QuestionHelpful = ({ questionBody, helpfulness, questionId, productId }) => {
+const QuestionHelpful = ({ questionBody, helpfulness, questionId }) => {
   const [helpfulToggle, setHelpfulToggle] = useState(false);
   const [addAnswerModal, setAddAnswerModal] = useState(false);
   const [name, setName] = useState('');
@@ -22,7 +22,7 @@ const QuestionHelpful = ({ questionBody, helpfulness, questionId, productId }) =
   const toggleHelpfulQuestion = () => {
     helpfulToggle
       ? console.log('already toggled')
-      : axios.put('/question/helpful', { questionId: questionId })
+      : axios.put(`/question/${questionId}/helpful`)
         .then(() => console.log('+1'))
         .catch(err => console.log(`Err at Marked helpful in Q&A widget ${questionId} ${err}`));
     setHelpfulToggle(true);
@@ -42,14 +42,13 @@ const QuestionHelpful = ({ questionBody, helpfulness, questionId, productId }) =
     setImages(photos);
   };
 
-  const handleAddAnswer = (event) => {
+  const handleAddAnswer = () => {
     regexVerifyEmail(email) && name.length && answerBody.length
-      ? axios.post('/qa/questions/answer', {
+      ? axios.post(`/qa/questions/${questionId}/answer`, {
         body: answerBody,
         name: name,
         email: email,
         photos: images,
-        questionId: questionId
       })
         .then((response) => {
           console.log('succesful answer post', response.data);

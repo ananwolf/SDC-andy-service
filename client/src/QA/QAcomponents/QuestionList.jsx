@@ -7,11 +7,11 @@ const QuestionList = ({ searchInput, productId }) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    axios.get('/qa/questions', {params: { productId: productId }})
+    axios.get(`/qa/questions/${productId}`)
       .then(response => {
         console.log(response.data);
         setQuestions(response.data.results
-          .sort((a, b) => a.helpfulness - b.helpfulness));
+          .sort((a, b) => b.question_helpfulness - a.question_helpfulness));
       })
       .catch(err => console.log(err));
   }, [productId]);
