@@ -1,12 +1,13 @@
 const pg = require('pg');
-const PASS = require('../config.js');
+const { PASS } = require('../config.js');
 
 const pool = new pg.Pool({
   user: 'ananwolf',
   host: 'localhost',
   database: 'questionsanswers',
   password: PASS,
-  port: 5432
+  port: 5432,
+  max: 95
 });
 
 pool.connect();
@@ -26,7 +27,7 @@ const fetchQuestions = (prodId) =>
           });
         });
     })
-    .catch(err => console.log(err));
+    .catch(err => err);
 
 const fetchAnswers = (questionId) =>
   pool.query('SELECT id, body, date, answerer_name, reported, helpfulness FROM answers WHERE question_id = $1 AND reported = false;', [questionId])
@@ -43,7 +44,9 @@ const fetchAnswers = (questionId) =>
               id: answer.id,
               body: answer.body,
               date: answer.date,
+              /* eslint-disable */
               answerer_name: answer.answerer_name,
+              /* eslint-enable */
               helpfulness: answer.helpfulness,
               photos: photo[index]
             };
@@ -51,7 +54,7 @@ const fetchAnswers = (questionId) =>
           return answerObj;
         });
     })
-    .catch(err => console.log(err));
+    .catch(err => err);
 
 const fetchPhotos = (answerId) =>
   pool.query('SELECT id, photo_url FROM answers_photos WHERE answer_id = $1', [answerId])
@@ -65,7 +68,7 @@ const fetchPhotos = (answerId) =>
       });
       return mappedData;
     })
-    .catch(err => console.log(err));
+    .catch(err => err);
 
 // POST QUESTION
 const postQuestion = (productId, body, askerName, askerEmail) =>

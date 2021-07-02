@@ -9,7 +9,6 @@ const QuestionList = ({ searchInput, productId }) => {
   useEffect(() => {
     axios.get(`/qa/questions/${productId}`)
       .then(response => {
-        console.log(response.data);
         setQuestions(response.data.results
           .sort((a, b) => b.question_helpfulness - a.question_helpfulness));
       })
@@ -60,3 +59,4 @@ const QuestionList = ({ searchInput, productId }) => {
 };
 
 export default QuestionList;
+

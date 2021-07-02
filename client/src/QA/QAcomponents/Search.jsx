@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Search = ({ handleSearch, searchInput }) => {
+const Search = ({ handleSearch }) => {
 
   const handleFocus = (event) => {
     event.preventDefault();
