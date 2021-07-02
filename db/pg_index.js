@@ -10,11 +10,20 @@ const { PASS, EC2 } = require('../config.js');
 //   max: 95
 // });
 
+// const pool = new pg.Pool({
+//   user: 'ubuntu',
+//   host: '',
+//   database: 'postgres',
+//   password: EC2,
+//   port: 5432,
+//   max: 95
+// });
+
 const pool = new pg.Pool({
   user: 'ubuntu',
-  host: 'ec2-18-188-32-215.us-east-2.compute.amazonaws.com',
+  host: 'ip-172-31-13-249.us-east-2.compute.internal',
   database: 'postgres',
-  password: EC2,
+  password: 'ubuntu',
   port: 5432,
   max: 95
 });
