@@ -34,17 +34,17 @@ CREATE TABLE answers_photos (
 );
 
 COPY answers_photos(id, answer_id, photo_url)
-FROM '/Users/ananwolf/Desktop/SDC-DB/answers_photos.csv'
+FROM '/Users/ananwolf/Desktop/ETL/answers_photos.csv'
 DELIMITER ','
 CSV HEADER;
 
 COPY answers(id, question_id, body, date, answerer_name, answerer_email, reported, helpfulness)
-FROM '/Users/ananwolf/Desktop/SDC-DB/answers.csv'
+FROM '/Users/ananwolf/Desktop/ETL/answers.csv'
 DELIMITER ','
 CSV HEADER;
 
 COPY questions(question_id, product_id, question_body, question_date, asker_name, asker_email, reported, question_helpfulness)
-FROM '/Users/ananwolf/Desktop/SDC-DB/questions.csv'
+FROM '/Users/ananwolf/Desktop/ETL/questions.csv'
 DELIMITER ','
 CSV HEADER;
 

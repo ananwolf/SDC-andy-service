@@ -1,11 +1,20 @@
 const pg = require('pg');
-const { PASS } = require('../config.js');
+const { PASS, EC2 } = require('../config.js');
+
+// const pool = new pg.Pool({
+//   user: 'ananwolf',
+//   host: 'localhost',
+//   database: 'questionsanswers',
+//   password: PASS,
+//   port: 5432,
+//   max: 95
+// });
 
 const pool = new pg.Pool({
-  user: 'ananwolf',
-  host: 'localhost',
-  database: 'questionsanswers',
-  password: PASS,
+  user: 'ubuntu',
+  host: 'ec2-18-188-32-215.us-east-2.compute.amazonaws.com',
+  database: 'postgres',
+  password: EC2,
   port: 5432,
   max: 95
 });
