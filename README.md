@@ -34,3 +34,11 @@ for development enviroment
 - jest-dom 4.0.0
 - react-test-render 1.1.2
 - react-test-renderer 17.0.2
+
+## Future implementations
+
+- database to store user's login information
+- database to store user's favorites
+- additional styling
+- additional detail blocks
+- Modal for on-click pictures to expand
